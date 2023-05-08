@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SecureAssetManager.Areas.Identity.Data;
 
-// Add profile data for application users by adding properties to the AppUser class
+// Add profile data for application users by adding properties to the AppUser class 
 public class AppUser : IdentityUser
 {
     [PersonalData]

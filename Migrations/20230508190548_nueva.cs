@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SecureAssetManager.Migrations
 {
-    public partial class cambio : Migration
+    public partial class nueva : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,18 +51,24 @@ namespace SecureAssetManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
+                name: "Assets",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ImagenUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CodigoActivo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Tipo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Categoria = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Clasificacion = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    EtiquetaPrincipal = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TipoValoracion = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Valoracion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post", x => x.ID);
+                    table.PrimaryKey("PK_Assets", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +235,7 @@ namespace SecureAssetManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "Assets");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

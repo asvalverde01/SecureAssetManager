@@ -1,30 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model IEnumerable<SecureAssetManager.Models.Asset>
 
+<h2>Lista de Activos</h2>
 
-
-<div class="text-center">
-    <h1 class="display-4">Bienvenido a Cheese</h1>
-    <p>App de registro de activos</p>
-
-   
-    <img src="~/images/logos/cheeseLogoxl.jpg" alt="Cheese" width="300" height="300" />
-
-    <p> Esta aplicación está diseñada para registrar activos </p>
-
-    <img src="~/images/logos/amigosHome.jpg" alt="Cheese" width="250" height="250" />
-    
-    <h2> Creadores </h2>
-    
-    <p> Esta aplicación fue creada por: </p>
-
-    <img src="~/images/creadores/creadores.jpg" alt="Cheese" width="200" height="200" />
-
-    <p> Alberto Valverde </p>
-    <p> Thyara Vintimilla </p>
-    <p> Estefanía Vinueza </p>
-</div>
-
-   
-
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código de Activo</th>
+            <th>Nombre</
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Categoría</th>
+            <th>Clasificación</th>
+            <th>Etiqueta Principal</th>
+            <th>Tipo de Valoración</th>
+            <th>Valoración</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var asset in Model)
+        {
+            <tr>
+                <td>@asset.CodigoActivo</td>
+                <td>@asset.Nombre</td>
+                <td>@asset.Descripcion</td>
+                <td>@asset.Tipo</td>
+                <td>@asset.Categoria</td>
+                <td>@asset.Clasificacion</td>
+                <td>@asset.EtiquetaPrincipal</td>
+                <td>@asset.TipoValoracion</td>
+                <td>@asset.Valoracion</td>
+            </tr>
+        }
+    </tbody>
+</table>
