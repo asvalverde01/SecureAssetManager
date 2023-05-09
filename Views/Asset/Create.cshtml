@@ -28,32 +28,123 @@
             </div>
             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
+                <select asp-for="Tipo" class="form-control">
+                    <option value="">-- Seleccione --</option>
+                    <option value="Pertenencia">Pertenencia</option>
+                    <option value="Beneficio">Beneficio</option>
+                    <option value="Recipiente">Recipiente</option>
+                </select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
+                <select asp-for="Categoria" class="form-control">
+                    <option value="">-- Seleccione una opción --</option>
+                    <option value="arch">arch</option>
+                    <option value="D">D</option>
+                    <option value="keys">keys</option>
+                    <option value="S">S</option>
+                    <option value="SW">SW</option>
+                    <option value="HW">HW</option>
+                    <option value="COM">COM</option>
+                    <option value="Media">Media</option>
+                    <option value="AUX">AUX</option>
+                    <option value="L">L</option>
+                    <option value="P">P</option>
+                </select>
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Clasificacion" class="control-label"></label>
-                <input asp-for="Clasificacion" class="form-control" />
+                <select asp-for="Clasificacion" class="form-control">
+                    <option value="Publico">Publico</option>
+                    <option value="Restringido">Restringido</option>
+                    <option value="Confidencial">Confidencial</option>
+                </select>
                 <span asp-validation-for="Clasificacion" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+             <div class="form-group">
                 <label asp-for="EtiquetaPrincipal" class="control-label"></label>
-                <input asp-for="EtiquetaPrincipal" class="form-control" />
-                <span asp-validation-for="EtiquetaPrincipal" class="text-danger"></span>
+                <select asp-for="EtiquetaPrincipal" class="form-control">
+                    <option value="sap">sap</option>
+                    <option value="ip">ip</option>
+                    <option value="ext">ext</option>
+                    <option value="files">files</option>
+                    <option value="backup">backup</option>
+                    <option value="conf">conf</option>
+                    <option value="password">password</option>
+                    <option value="auth">auth</option>
+                    <option value="info">info</option>
+                    <option value="encrypt">encrypt</option>
+                    <option value="shared_secret">shared_secret</option>
+                    <option value="public_encryption">public_encryption</option>
+                    <option value="public_decryption">public_decryption</option>
+                    <option value="anon">anon</option>
+                    <option value="pub">pub</option>
+                    <option value="ext">ext</option>
+                    <option value="www">www</option>
+                    <option value="telnet">telnet</option>
+                    <option value="email">email</option>
+                    <option value="file">file</option>
+                    <option value="prp">prp</option>
+                    <option value="std">std</option>
+                    <option value="browser">browser</option>
+                    <option value="www">www</option>
+                    <option value="app">app</option>
+                    <option value="email_client">email_client</option>
+                    <option value="email_server">email_server</option>
+                    <option value="host">host</option>
+                    <option value="pc">pc</option>
+                    <option value="mobile">mobile</option>
+                    <option value="pda">pda</option>
+                    <option value="ipphone">ipphone</option>
+                    <option value="wifi">wifi</option>
+                    <option value="mobile">mobile</option>
+                    <option value="sat">sat</option>
+                    <option value="LAN">LAN</option>
+                    <option value="MAN">MAN</option>
+                    <option value="Internet">Internet</option>
+                    <option value="electronic">electronic</option>
+                    <option value="disk">disk</option>
+                    <option value="vdisk">vdisk</option>
+                    <option value="cd">cd</option>
+                    <option value="usb">usb</option>
+                    <option value="dvd">dvd</option>
+                    <option value="power">power</option>
+                    <option value="ups">ups</option>
+                    <option value="gen">gen</option>
+                    <option value="cabling">cabling</option>
+                    <option value="wire">wire</option>
+                    <option value="fiber">fiber</option>
+                    <option value="site">site</option>
+                    <option value="building">building</option>
+                    <option value="local">local</option>
+                    <option value="mobile">mobile</option>
+                    <option value="car">car</option>
+                    <option value="plane">plane</option>
+                    <option value="ship">ship</option>
+                    <option value="shelter">shelter</option>
+                    <option value="ue">ue</option>
+                    <option value="ui">ui</option>
+                    <option value="op">op</option>
+                    <option value="adm">adm</option>
+            </select>
             </div>
-            <div class="form-group">
+            <div>
+            <select asp-for="TipoValoracion" class="form-control">
                 <label asp-for="TipoValoracion" class="control-label"></label>
-                <input asp-for="TipoValoracion" class="form-control" />
-                <span asp-validation-for="TipoValoracion" class="text-danger"></span>
+                <option value="Confidencialidad">Confidencialidad</option>
+                <option value="Integridad">Integridad</option>
+                <option value="Disponibilidad">Disponibilidad</option>
+            </select>
             </div>
-            <div class="form-group">
+
+            <div class="form-group">            
                 <label asp-for="Valoracion" class="control-label"></label>
-                <input asp-for="Valoracion" class="form-control" />
+                <input type="number" name="Valoracion" min="1" max="4" step="1">
                 <span asp-validation-for="Valoracion" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -64,7 +155,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Regresar a la lista</a>
+    <a asp-controller="Home" asp-action="Index">Regresar a la lista</a>
+
 </div>
 
 @section Scripts {

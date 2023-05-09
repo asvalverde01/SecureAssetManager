@@ -28,7 +28,7 @@ namespace SecureAssetManager.Controllers
 			{
 				_context.Add(asset);
 				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
+				return RedirectToAction("Index", "Home");
 			}
 			return View(asset);
 		}
