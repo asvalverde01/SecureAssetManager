@@ -21,7 +21,7 @@ body {
 
 
 #navbar {
-    background-color: #fbad50;
+    background-color: #146C94;
     color: white;
     transition: 0.5s;
 }
@@ -107,3 +107,7 @@ a {
         a:hover::before {
             width: 100%;
         }
+
+#assetTable td, #assetTable th {
+    font-size: 13px;
+}
