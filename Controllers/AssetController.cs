@@ -22,9 +22,9 @@ namespace SecureAssetManager.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,TipoValoracion,Valoracion")] Asset asset)
-		{
-			if (ModelState.IsValid)
+        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,TipoValoracion,Valoracion")] Asset asset)
+        {
+            if (ModelState.IsValid)
 			{
 				_context.Add(asset);
 				await _context.SaveChangesAsync();

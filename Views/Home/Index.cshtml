@@ -4,12 +4,13 @@
 @model IEnumerable<SecureAssetManager.Models.Asset>
 
 <h2>Lista de Activos</h2>
-
 <table class="table">
     <thead>
         <tr>
             <th>Código de Activo</th>
             <th>Nombre</th>
+            <th>Responsable</th>
+            <th>Ubicación</th>
             <th>Descripción</th>
             <th>Tipo</th>
             <th>Categoría</th>
@@ -25,6 +26,8 @@
             <tr>
                 <td>@asset.CodigoActivo</td>
                 <td>@asset.Nombre</td>
+                <td>@asset.Responsable</td>
+                <td>@asset.Ubicacion</td>
                 <td>@asset.Descripcion</td>
                 <td>@asset.Tipo</td>
                 <td>@asset.Categoria</td>

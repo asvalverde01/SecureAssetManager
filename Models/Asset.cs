@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SecureAssetManager.Models
 {
@@ -17,7 +14,15 @@ namespace SecureAssetManager.Models
 		[StringLength(50, ErrorMessage = "El nombre del activo debe tener máximo 50 caracteres.")]
 		public string Nombre { get; set; }
 
-		[StringLength(250, ErrorMessage = "La descripción del activo debe tener máximo 250 caracteres.")]
+        [Required(ErrorMessage = "El responsable del activo es obligatorio.")]
+        [StringLength(50, ErrorMessage = "El responsable del activo debe tener máximo 50 caracteres.")]
+        public string Responsable { get; set; }
+
+        [Required(ErrorMessage = "La ubicación del activo es obligatoria.")]
+        [StringLength(20, ErrorMessage = "La ubicación del activo debe tener máximo 20 caracteres.")]
+        public string Ubicacion { get; set; }
+
+        [StringLength(250, ErrorMessage = "La descripción del activo debe tener máximo 250 caracteres.")]
 		public string? Descripcion { get; set; }
 
 		[Required(ErrorMessage = "El tipo de activo es obligatorio.")]
