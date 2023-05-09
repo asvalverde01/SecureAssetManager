@@ -18,6 +18,7 @@
             <th>Etiqueta Principal</th>
             <th>Tipo de Valoración</th>
             <th>Valoración</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +36,11 @@
                 <td>@asset.EtiquetaPrincipal</td>
                 <td>@asset.TipoValoracion</td>
                 <td>@asset.Valoracion</td>
+                <td>
+                    <a href="@Url.Action("Details", "Asset", new { id = asset.ID })">Detalles</a>
+                    <a href="@Url.Action("Edit", "Asset", new { id = asset.ID })">Editar</a>
+                    <a href="@Url.Action("Delete", "Asset", new { id = asset.ID })">Eliminar</a>
+                </td>
             </tr>
         }
     </tbody>

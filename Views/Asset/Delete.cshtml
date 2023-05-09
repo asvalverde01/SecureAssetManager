@@ -1,0 +1,100 @@
+﻿@model SecureAssetManager.Models.Asset
+
+@{
+    ViewData["Title"] = "Eliminar Activo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>¿Está seguro que desea eliminar este activo?</h3>
+<div>
+    <h4>Detalles del Activo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoActivo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigoActivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Responsable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Responsable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ubicacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ubicacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clasificacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Clasificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EtiquetaPrincipal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EtiquetaPrincipal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoValoracion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoValoracion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valoracion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Valoracion)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CodigoActivo" />
+
+        <div class="form-group">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-default">Cancelar</a>
+        </div>
+    </form>
+</div>
