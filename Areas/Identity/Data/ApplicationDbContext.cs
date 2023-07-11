@@ -40,7 +40,9 @@ namespace SecureAssetManager.Data
 
 		public DbSet<Threat> Threats { get; set; }
 
-		public async Task<string> SaveImage(IFormFile file)
+        public DbSet<Vulnerability> Vulnerabilities { get; set; }
+
+        public async Task<string> SaveImage(IFormFile file)
 		{
 			var fileName = $"{Guid.NewGuid()}_{file.FileName}";
 			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
