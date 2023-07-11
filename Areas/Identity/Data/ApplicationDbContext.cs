@@ -6,6 +6,7 @@ using SecureAssetManager.Areas.Identity.Data;
 using SecureAssetManager.Models;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace SecureAssetManager.Data
 {
@@ -36,6 +37,8 @@ namespace SecureAssetManager.Data
 		}
 
 		public DbSet<Asset> Assets { get; set; }
+
+		public DbSet<Threat> Threats { get; set; }
 
 		public async Task<string> SaveImage(IFormFile file)
 		{

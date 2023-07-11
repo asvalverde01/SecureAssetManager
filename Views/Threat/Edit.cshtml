@@ -1,0 +1,52 @@
+﻿@model SecureAssetManager.Models.Threat
+
+@{
+    ViewData["Title"] = "Editar Amenaza";
+}
+
+<h1>Editar Amenaza</h1>
+
+<h4>Amenaza</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Code" />
+            <div class="form-group">
+                <label asp-for="ThreatOrigin" class="control-label"></label>
+                <input asp-for="ThreatOrigin" class="form-control" />
+                <span asp-validation-for="ThreatOrigin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThreatDescription" class="control-label"></label>
+                <input asp-for="ThreatDescription" class="form-control" />
+                <span asp-validation-for="ThreatDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Degradation" class="control-label"></label>
+                <input asp-for="Degradation" class="form-control" />
+                <span asp-validation-for="Degradation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Probability" class="control-label"></label>
+                <input asp-for="Probability" class="form-control" />
+                <span asp-validation-for="Probability" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

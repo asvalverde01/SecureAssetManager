@@ -19,13 +19,18 @@ namespace SecureAssetManager.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
-        {
-            var assets = _context.Assets.ToList();
-            return View(assets);
-        }
+		public IActionResult Index()
+		{
+			var assets = _context.Assets.ToList();
+			var threats = _context.Threats.ToList();  // New line to get the threats
+			ViewBag.Threats = threats;               // New line to pass the threats to the view
+			return View(assets);
+		}
 
-        public IActionResult Privacy()
+
+
+
+		public IActionResult Privacy()
         {
             return View();
         }
