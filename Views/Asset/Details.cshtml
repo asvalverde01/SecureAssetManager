@@ -64,20 +64,27 @@
         @Html.DisplayFor(model => model.EtiquetaPrincipal)
     </dd>
 
-    <dt class="col-sm-3">
-        @Html.DisplayNameFor(model => model.TipoValoracion)
-    </dt>
-    <dd class="col-sm-9">
-        @Html.DisplayFor(model => model.TipoValoracion)
-    </dd>
 
     <dt class="col-sm-3">
-        @Html.DisplayNameFor(model => model.Valoracion)
+        @Html.DisplayNameFor(model => model.ValoracionConfidencialidad)
     </dt>
     <dd class="col-sm-9">
-        @Html.DisplayFor(model => model.Valoracion)
+        @Html.DisplayFor(model => model.ValoracionConfidencialidad)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.ValoracionIntegridad)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.ValoracionIntegridad)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.ValoracionDisponibilidad)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.ValoracionDisponibilidad)
     </dd>
 </dl>
+
 <div>
     <a asp-action="Index">Volver a la Lista de Activos</a>
 </div>

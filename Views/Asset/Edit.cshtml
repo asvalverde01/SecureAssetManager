@@ -64,16 +64,21 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="TipoValoracion" class="control-label"></label>
-                <input asp-for="TipoValoracion" class="form-control" />
-                <span asp-validation-for="TipoValoracion" class="text-danger"></span>
+                <label asp-for="ValoracionConfidencialidad" class="control-label"></label>
+                <input asp-for="ValoracionConfidencialidad" class="form-control" />
+                <span asp-validation-for="ValoracionConfidencialidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValoracionIntegridad" class="control-label"></label>
+                <input asp-for="ValoracionIntegridad" class="form-control" />
+                <span asp-validation-for="ValoracionIntegridad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValoracionDisponibilidad" class="control-label"></label>
+                <input asp-for="ValoracionDisponibilidad" class="form-control" />
+                <span asp-validation-for="ValoracionDisponibilidad" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Valoracion" class="control-label"></label>
-                <input asp-for="Valoracion" class="form-control" />
-                <span asp-validation-for="Valoracion" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
                 <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>

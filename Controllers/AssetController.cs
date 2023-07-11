@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SecureAssetManager.Data;
 using SecureAssetManager.Models;
+
 namespace SecureAssetManager.Controllers
 {
     public class AssetController : Controller
@@ -25,7 +26,7 @@ namespace SecureAssetManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,TipoValoracion,Valoracion")] Asset asset)
+        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad")] Asset asset)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +54,7 @@ namespace SecureAssetManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,TipoValoracion,Valoracion")] Asset asset)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad")] Asset asset)
         {
             if (id != asset.ID)
             {
@@ -80,8 +81,9 @@ namespace SecureAssetManager.Controllers
                     existingAsset.Categoria = asset.Categoria;
                     existingAsset.Clasificacion = asset.Clasificacion;
                     existingAsset.EtiquetaPrincipal = asset.EtiquetaPrincipal;
-                    existingAsset.TipoValoracion = asset.TipoValoracion;
-                    existingAsset.Valoracion = asset.Valoracion;
+                    existingAsset.ValoracionConfidencialidad = asset.ValoracionConfidencialidad;
+                    existingAsset.ValoracionIntegridad = asset.ValoracionIntegridad;
+                    existingAsset.ValoracionDisponibilidad = asset.ValoracionDisponibilidad;
 
                     // save changes to database
                     await _context.SaveChangesAsync();
@@ -101,8 +103,6 @@ namespace SecureAssetManager.Controllers
             }
             return View(asset);
         }
-
-
 
         public async Task<IActionResult> Details(int? id)
         {

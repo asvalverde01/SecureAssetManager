@@ -12,8 +12,8 @@ using SecureAssetManager.Data;
 namespace SecureAssetManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230711173053_threats")]
-    partial class threats
+    [Migration("20230711211311_Ass")]
+    partial class Ass
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,7 +286,13 @@ namespace SecureAssetManager.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Valoracion")
+                    b.Property<int>("ValoracionConfidencialidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValoracionDisponibilidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValoracionIntegridad")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -318,6 +324,34 @@ namespace SecureAssetManager.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Threats");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Vulnerability", b =>
+                {
+                    b.Property<string>("AssetCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsHardware")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNetwork")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSite")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSoftware")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Probability")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VulnerabilityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssetCode");
+
+                    b.ToTable("Vulnerabilities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

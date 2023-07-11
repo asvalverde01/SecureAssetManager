@@ -276,11 +276,6 @@ namespace SecureAssetManager.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("TipoValoracion")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<int>("Valoracion")
                         .HasColumnType("int");
 

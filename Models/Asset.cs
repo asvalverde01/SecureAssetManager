@@ -50,14 +50,19 @@ namespace SecureAssetManager.Models
         [Display(Name = "Etiqueta Principal")]
         public string EtiquetaPrincipal { get; set; }
 
-        [Required(ErrorMessage = "El tipo de valoración del activo es obligatorio.")]
-        [StringLength(20, ErrorMessage = "El tipo de valoración del activo debe tener máximo 20 caracteres.")]
-        [Display(Name = "Tipo de Valoración")]
-        public string TipoValoracion { get; set; }
+        [Required(ErrorMessage = "La valoración de confidencialidad del activo es obligatoria.")]
+        [Range(1, 4, ErrorMessage = "La valoración de confidencialidad del activo debe estar entre 1 y 4.")]
+        [Display(Name = "Valoración de Confidencialidad")]
+        public int ValoracionConfidencialidad { get; set; }
 
-        [Required(ErrorMessage = "La valoración del activo es obligatoria.")]
-        [Range(0, 4, ErrorMessage = "La valoración del activo debe estar entre 0 y 4.")]
-        [Display(Name = "Valoración")]
-        public int Valoracion { get; set; }
+        [Required(ErrorMessage = "La valoración de integridad del activo es obligatoria.")]
+        [Range(1, 4, ErrorMessage = "La valoración de integridad del activo debe estar entre 1 y 4.")]
+        [Display(Name = "Valoración de Integridad")]
+        public int ValoracionIntegridad { get; set; }
+
+        [Required(ErrorMessage = "La valoración de disponibilidad del activo es obligatoria.")]
+        [Range(1, 4, ErrorMessage = "La valoración de disponibilidad del activo debe estar entre 1 y 4.")]
+        [Display(Name = "Valoración de Disponibilidad")]
+        public int ValoracionDisponibilidad { get; set; }
     }
 }
