@@ -298,6 +298,38 @@ namespace SecureAssetManager.Migrations
                     b.ToTable("Assets");
                 });
 
+            modelBuilder.Entity("SecureAssetManager.Models.Risk", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("CID")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ExistingControl")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double>("RiskLevel")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ThreatLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VulnerabilityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("Risks");
+                });
+
             modelBuilder.Entity("SecureAssetManager.Models.Threat", b =>
                 {
                     b.Property<string>("Code")

@@ -12,8 +12,8 @@ using SecureAssetManager.Data;
 namespace SecureAssetManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230711173053_threats")]
-    partial class threats
+    [Migration("20230711232906_Db")]
+    partial class Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,12 +286,50 @@ namespace SecureAssetManager.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Valoracion")
+                    b.Property<int>("ValoracionConfidencialidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValoracionDisponibilidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValoracionIntegridad")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.ToTable("Assets");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Risk", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("CID")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ExistingControl")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double>("RiskLevel")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ThreatLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VulnerabilityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("Risks");
                 });
 
             modelBuilder.Entity("SecureAssetManager.Models.Threat", b =>
@@ -318,6 +356,34 @@ namespace SecureAssetManager.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Threats");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Vulnerability", b =>
+                {
+                    b.Property<string>("AssetCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsHardware")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNetwork")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSite")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSoftware")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Probability")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VulnerabilityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssetCode");
+
+                    b.ToTable("Vulnerabilities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
