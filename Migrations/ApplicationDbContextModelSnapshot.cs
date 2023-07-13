@@ -364,8 +364,14 @@ namespace SecureAssetManager.Migrations
 
             modelBuilder.Entity("SecureAssetManager.Models.Threat", b =>
                 {
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AssetID")
+                        .HasColumnType("int");
 
                     b.Property<int>("Degradation")
                         .HasColumnType("int");
@@ -383,15 +389,23 @@ namespace SecureAssetManager.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetID");
 
                     b.ToTable("Threats");
                 });
 
             modelBuilder.Entity("SecureAssetManager.Models.Vulnerability", b =>
                 {
-                    b.Property<string>("AssetCode")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AssetID")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsHardware")
                         .HasColumnType("bit");
@@ -411,7 +425,9 @@ namespace SecureAssetManager.Migrations
                     b.Property<int>("VulnerabilityLevel")
                         .HasColumnType("int");
 
-                    b.HasKey("AssetCode");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetID");
 
                     b.ToTable("Vulnerabilities");
                 });
@@ -465,6 +481,27 @@ namespace SecureAssetManager.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Threat", b =>
+                {
+                    b.HasOne("SecureAssetManager.Models.Asset", null)
+                        .WithMany("Amenazas")
+                        .HasForeignKey("AssetID");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Vulnerability", b =>
+                {
+                    b.HasOne("SecureAssetManager.Models.Asset", null)
+                        .WithMany("Vulnerabilidades")
+                        .HasForeignKey("AssetID");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Asset", b =>
+                {
+                    b.Navigation("Amenazas");
+
+                    b.Navigation("Vulnerabilidades");
                 });
 #pragma warning restore 612, 618
         }

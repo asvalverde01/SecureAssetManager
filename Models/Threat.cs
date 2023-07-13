@@ -6,7 +6,7 @@ namespace SecureAssetManager.Models
     {
         [Key]
         [Display(Name = "Código")]
-        public string Code { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El origen de la amenaza es obligatorio.")]
         [StringLength(100)]
@@ -19,7 +19,7 @@ namespace SecureAssetManager.Models
         public string ThreatDescription { get; set; }
 
         [Required(ErrorMessage = "La degradación es obligatoria.")]
-        [Range(1, 5, ErrorMessage = "La degradación debe estar entre 1 y 5.")]
+        [Range(1, 3, ErrorMessage = "La degradación debe estar entre 1 y 3.")]
         [Display(Name = "Degradación")]
         public int Degradation { get; set; }
 

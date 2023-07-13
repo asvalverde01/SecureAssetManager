@@ -36,8 +36,9 @@ namespace SecureAssetManager.Controllers
             Console.WriteLine("Primer paso");
 
             var asset = _context.Assets.FirstOrDefault(a => a.CodigoActivo == risk.Code);
-            var threat = _context.Threats.FirstOrDefault(t => t.Code == risk.Code);
-            var vulnerability = _context.Vulnerabilities.FirstOrDefault(v => v.AssetCode == risk.Code);
+            var threat = _context.Threats.FirstOrDefault(t => t.Id == int.Parse(risk.Code));
+
+            var vulnerability = _context.Vulnerabilities.FirstOrDefault(v => v.Id == int.Parse(risk.Code));
 
             if (asset != null && threat != null && vulnerability != null)
             {

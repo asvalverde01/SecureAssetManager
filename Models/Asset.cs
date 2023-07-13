@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SecureAssetManager.Models
 {
@@ -64,5 +65,9 @@ namespace SecureAssetManager.Models
         [Range(1, 4, ErrorMessage = "La valoración de disponibilidad del activo debe estar entre 1 y 4.")]
         [Display(Name = "Valoración de Disponibilidad")]
         public int ValoracionDisponibilidad { get; set; }
+
+        public List<Threat> Amenazas { get; set; }
+
+        public List<Vulnerability> Vulnerabilidades { get; set; }
     }
 }
