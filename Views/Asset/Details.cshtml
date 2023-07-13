@@ -64,7 +64,6 @@
         @Html.DisplayFor(model => model.EtiquetaPrincipal)
     </dd>
 
-
     <dt class="col-sm-3">
         @Html.DisplayNameFor(model => model.ValoracionConfidencialidad)
     </dt>
@@ -83,6 +82,34 @@
     <dd class="col-sm-9">
         @Html.DisplayFor(model => model.ValoracionDisponibilidad)
     </dd>
+
+    
+    <dt class="col-sm-3">
+        Amenazas
+    </dt>
+    <dd class="col-sm-9">
+        <ul>
+            @foreach (var assetThreat in Model.AssetThreats)
+            {
+                <li>@assetThreat.Threat.ThreatDescription</li>
+            }
+        </ul>
+    </dd>
+
+    <dt class="col-sm-3">
+        Vulnerabilidades
+    </dt>
+    <dd class="col-sm-9">
+        <ul>
+            @foreach (var assetVulnerability in Model.AssetVulnerabilities)
+            {
+                <li>@assetVulnerability.Vulnerability.VulnerabilityDescription</li>
+            }
+        </ul>
+    </dd>
+
+
+
 </dl>
 
 <div>

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecureAssetManager.Models
 {
@@ -28,7 +30,7 @@ namespace SecureAssetManager.Models
 
         [StringLength(250, ErrorMessage = "La descripción del activo debe tener máximo 250 caracteres.")]
         [Display(Name = "Descripción")]
-        public string? Descripcion { get; set; }
+        public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "El tipo de activo es obligatorio.")]
         [StringLength(20, ErrorMessage = "El tipo de activo debe tener máximo 20 caracteres.")]
@@ -64,5 +66,11 @@ namespace SecureAssetManager.Models
         [Range(1, 4, ErrorMessage = "La valoración de disponibilidad del activo debe estar entre 1 y 4.")]
         [Display(Name = "Valoración de Disponibilidad")]
         public int ValoracionDisponibilidad { get; set; }
+
+        [Display(Name = "Amenazas")]
+        public virtual ICollection<AssetThreat> AssetThreats { get; set; }
+
+        [Display(Name = "Vulnerabilidades")]
+        public virtual ICollection<AssetVulnerability> AssetVulnerabilities { get; set; }
     }
 }

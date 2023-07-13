@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Risk\NewFolder\" />
     <Folder Include="wwwroot\images\logos\" />
     <Folder Include="wwwroot\images\creadores\" />
     <Folder Include="wwwroot\dataImages\" />

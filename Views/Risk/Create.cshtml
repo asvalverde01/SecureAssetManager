@@ -21,7 +21,6 @@
                 <span asp-validation-for="Code" class="text-danger"></span>
             </div>
 
-
             <div class="form-group">
                 <label asp-for="ExistingControl" class="control-label"></label>
                 <select asp-for="ExistingControl" class="form-control">
@@ -46,6 +45,47 @@
 <div>
     <a asp-action="Index">Volver a la lista</a>
 </div>
+
+<h4>Activos Registrados</h4>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código Activo</th>
+            <th>Nombre</th>
+            <th>Responsable</th>
+            <th>Ubicación</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Categoría</th>
+            <th>Clasificación</th>
+            <th>Etiqueta Principal</th>
+            <th>Valoración Confidencialidad</th>
+            <th>Valoración Integridad</th>
+            <th>Valoración Disponibilidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var asset in ViewBag.Assets)
+        {
+            <tr>
+                <td>@asset.CodigoActivo</td>
+                <td>@asset.Nombre</td>
+                <td>@asset.Responsable</td>
+                <td>@asset.Ubicacion</td>
+                <td>@asset.Descripcion</td>
+                <td>@asset.Tipo</td>
+                <td>@asset.Categoria</td>
+                <td>@asset.Clasificacion</td>
+                <td>@asset.EtiquetaPrincipal</td>
+                <td>@asset.ValoracionConfidencialidad</td>
+                <td>@asset.ValoracionIntegridad</td>
+                <td>@asset.ValoracionDisponibilidad</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @section Scripts {
     @{

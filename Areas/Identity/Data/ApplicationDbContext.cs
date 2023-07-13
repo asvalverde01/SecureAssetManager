@@ -37,6 +37,8 @@ namespace SecureAssetManager.Data
 		}
 
 		public DbSet<Asset> Assets { get; set; }
+		public DbSet<AssetVulnerability> AssetVulnerabilitys { get; set; }
+		public DbSet<AssetThreat> AssetThreats { get; set; }
 
 		public DbSet<Threat> Threats { get; set; }
 

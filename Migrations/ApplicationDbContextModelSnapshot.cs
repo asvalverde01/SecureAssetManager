@@ -256,6 +256,7 @@ namespace SecureAssetManager.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
@@ -296,6 +297,52 @@ namespace SecureAssetManager.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Assets");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.AssetThreat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThreatId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("ThreatId");
+
+                    b.ToTable("AssetThreats");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.AssetVulnerability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VulnerabilityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("VulnerabilityId");
+
+                    b.ToTable("AssetVulnerabilitys");
                 });
 
             modelBuilder.Entity("SecureAssetManager.Models.Control", b =>
@@ -364,8 +411,11 @@ namespace SecureAssetManager.Migrations
 
             modelBuilder.Entity("SecureAssetManager.Models.Threat", b =>
                 {
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Degradation")
                         .HasColumnType("int");
@@ -383,15 +433,18 @@ namespace SecureAssetManager.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("Threats");
                 });
 
             modelBuilder.Entity("SecureAssetManager.Models.Vulnerability", b =>
                 {
-                    b.Property<string>("AssetCode")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<bool>("IsHardware")
                         .HasColumnType("bit");
@@ -408,10 +461,15 @@ namespace SecureAssetManager.Migrations
                     b.Property<int>("Probability")
                         .HasColumnType("int");
 
+                    b.Property<string>("VulnerabilityDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("VulnerabilityLevel")
                         .HasColumnType("int");
 
-                    b.HasKey("AssetCode");
+                    b.HasKey("Id");
 
                     b.ToTable("Vulnerabilities");
                 });
@@ -465,6 +523,51 @@ namespace SecureAssetManager.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.AssetThreat", b =>
+                {
+                    b.HasOne("SecureAssetManager.Models.Asset", "Asset")
+                        .WithMany("AssetThreats")
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecureAssetManager.Models.Threat", "Threat")
+                        .WithMany()
+                        .HasForeignKey("ThreatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+
+                    b.Navigation("Threat");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.AssetVulnerability", b =>
+                {
+                    b.HasOne("SecureAssetManager.Models.Asset", "Asset")
+                        .WithMany("AssetVulnerabilities")
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecureAssetManager.Models.Vulnerability", "Vulnerability")
+                        .WithMany()
+                        .HasForeignKey("VulnerabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+
+                    b.Navigation("Vulnerability");
+                });
+
+            modelBuilder.Entity("SecureAssetManager.Models.Asset", b =>
+                {
+                    b.Navigation("AssetThreats");
+
+                    b.Navigation("AssetVulnerabilities");
                 });
 #pragma warning restore 612, 618
         }

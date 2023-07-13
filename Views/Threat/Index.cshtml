@@ -25,15 +25,15 @@
         @foreach (var threat in Model)
         {
             <tr>
-                <td>@threat.Code</td>
+                <td>@threat.Id</td>
                 <td>@threat.ThreatOrigin</td>
                 <td>@threat.ThreatDescription</td>
                 <td>@threat.Degradation</td>
                 <td>@threat.Probability</td>
                 <td>
-                    <a href="@Url.Action("Details", "Threat", new { code = threat.Code })">Detalles</a>
-                    <a href="@Url.Action("Edit", "Threat", new { code = threat.Code })">Editar</a>
-                    <a href="@Url.Action("Delete", "Threat", new { code = threat.Code })">Eliminar</a>
+                    <a href="@Url.Action("Details", "Threat", new { code = threat.Id })">Detalles</a>
+                    <a href="@Url.Action("Edit", "Threat", new { code = threat.Id })">Editar</a>
+                    <a href="@Url.Action("Delete", "Threat", new { code = threat.Id })">Eliminar</a>
                 </td>
             </tr>
         }

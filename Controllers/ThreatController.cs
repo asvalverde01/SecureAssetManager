@@ -3,145 +3,135 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecureAssetManager.Data;
 using SecureAssetManager.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecureAssetManager.Controllers
 {
-	public class ThreatController : Controller
-	{
-		private readonly ApplicationDbContext _context;
+    public class ThreatController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-		public ThreatController(ApplicationDbContext context)
-		{
-			_context = context;
-		}
+        public ThreatController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-		public async Task<IActionResult> Index()
-		{
-			return View(await _context.Threats.ToListAsync());
-		}
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Threats.ToListAsync());
+        }
 
         public IActionResult Create()
         {
-            var assets = _context.Assets.ToList();
-            var assetList = assets.Select(a => new SelectListItem
-            {
-                Value = a.CodigoActivo,
-                Text = $"{a.CodigoActivo} - {a.Descripcion}"
-            });
-
-            ViewBag.AssetCodes = new SelectList(assetList, "Value", "Text");
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ThreatOrigin,ThreatDescription,Degradation,Probability")] Threat threat)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(threat);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(threat);
+        }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var threat = await _context.Threats.FirstOrDefaultAsync(m => m.Id == id);
+            if (threat == null)
+            {
+                return NotFound();
+            }
+
+            return View(threat);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var threat = await _context.Threats.FindAsync(id);
+            if (threat == null)
+            {
+                return NotFound();
+            }
+            return View(threat);
+        }
 
         [HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("Code,ThreatOrigin,ThreatDescription,Degradation,Probability")] Threat threat)
-		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(threat);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			return View(threat);
-		}
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ThreatOrigin,ThreatDescription,Degradation,Probability")] Threat threat)
+        {
+            if (id != threat.Id)
+            {
+                return NotFound();
+            }
 
-		public async Task<IActionResult> Details(string code)
-		{
-			if (code == null)
-			{
-				return NotFound();
-			}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(threat);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ThreatExists(threat.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(threat);
+        }
 
-			var threat = await _context.Threats
-				.FirstOrDefaultAsync(m => m.Code == code);
-			if (threat == null)
-			{
-				return NotFound();
-			}
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
 
-			return View(threat);
-		}
+            var threat = await _context.Threats.FirstOrDefaultAsync(m => m.Id == id);
+            if (threat == null)
+            {
+                return NotFound();
+            }
 
-		public async Task<IActionResult> Edit(string code)
-		{
-			if (code == null)
-			{
-				return NotFound();
-			}
+            return View(threat);
+        }
 
-			var threat = await _context.Threats.FindAsync(code);
-			if (threat == null)
-			{
-				return NotFound();
-			}
-			return View(threat);
-		}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var threat = await _context.Threats.FindAsync(id);
+            _context.Threats.Remove(threat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(string code, [Bind("Code,ThreatOrigin,ThreatDescription,Degradation,Probability")] Threat threat)
-		{
-			if (code != threat.Code)
-			{
-				return NotFound();
-			}
-
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(threat);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!ThreatExists(threat.Code))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			return View(threat);
-		}
-
-		public async Task<IActionResult> Delete(string code)
-		{
-			if (code == null)
-			{
-				return NotFound();
-			}
-
-			var threat = await _context.Threats
-				.FirstOrDefaultAsync(m => m.Code == code);
-			if (threat == null)
-			{
-				return NotFound();
-			}
-
-			return View(threat);
-		}
-
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(string code)
-		{
-			var threat = await _context.Threats.FindAsync(code);
-			_context.Threats.Remove(threat);
-			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
-		}
-
-		private bool ThreatExists(string code)
-		{
-			return _context.Threats.Any(e => e.Code == code);
-		}
-	}
+        private bool ThreatExists(int id)
+        {
+            return _context.Threats.Any(e => e.Id == id);
+        }
+    }
 }

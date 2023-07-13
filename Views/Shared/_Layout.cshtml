@@ -7,8 +7,13 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/SecureAssetManager.styles.css" asp-append-version="true" />
-	<link rel="stylesheet" href=' http://fonts.googleapis.com/css?family=Roboto' />
+	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Roboto' />
 	<link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css' />
+	<style>
+		.navbar .nav-link.text-dark {
+			color: white !important;
+		}
+	</style>
 </head>
 
 <body>
@@ -40,9 +45,6 @@
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Control" asp-action="index">Identificación de controles</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Tratamiento de riesgo</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
