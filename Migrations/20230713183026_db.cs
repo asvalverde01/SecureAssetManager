@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SecureAssetManager.Migrations
 {
-    public partial class DB : Migration
+    public partial class db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -130,6 +130,7 @@ namespace SecureAssetManager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    VulnerabilityDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IsHardware = table.Column<bool>(type: "bit", nullable: false),
                     IsSoftware = table.Column<bool>(type: "bit", nullable: false),
                     IsNetwork = table.Column<bool>(type: "bit", nullable: false),

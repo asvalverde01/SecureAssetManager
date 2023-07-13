@@ -12,8 +12,8 @@ using SecureAssetManager.Data;
 namespace SecureAssetManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230713083544_DB")]
-    partial class DB
+    [Migration("20230713183026_db")]
+    partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -462,6 +462,11 @@ namespace SecureAssetManager.Migrations
 
                     b.Property<int>("Probability")
                         .HasColumnType("int");
+
+                    b.Property<string>("VulnerabilityDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("VulnerabilityLevel")
                         .HasColumnType("int");

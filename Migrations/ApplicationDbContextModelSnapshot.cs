@@ -461,6 +461,11 @@ namespace SecureAssetManager.Migrations
                     b.Property<int>("Probability")
                         .HasColumnType("int");
 
+                    b.Property<string>("VulnerabilityDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("VulnerabilityLevel")
                         .HasColumnType("int");
 
