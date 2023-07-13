@@ -256,6 +256,7 @@ namespace SecureAssetManager.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 

@@ -178,6 +178,22 @@
 
 
             <div class="form-group">
+                <label asp-for="Amenazas" class="control-label"></label>
+                <select asp-for="Amenazas" asp-items="ViewBag.Threats" class="form-control" multiple></select>
+                <span asp-validation-for="Amenazas" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vulnerabilidades" class="control-label"></label>
+                <select asp-for="Vulnerabilidades" asp-items="ViewBag.Vulnerabilities" class="form-control" multiple></select>
+                <span asp-validation-for="Vulnerabilidades" class="text-danger"></span>
+            </div>
+
+
+
+
+
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SecureAssetManager.Migrations
 {
-    public partial class DB : Migration
+    public partial class db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,7 +60,7 @@ namespace SecureAssetManager.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Responsable = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Ubicacion = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Categoria = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Clasificacion = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),

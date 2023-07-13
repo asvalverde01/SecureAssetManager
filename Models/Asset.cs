@@ -29,7 +29,7 @@ namespace SecureAssetManager.Models
 
         [StringLength(250, ErrorMessage = "La descripción del activo debe tener máximo 250 caracteres.")]
         [Display(Name = "Descripción")]
-        public string? Descripcion { get; set; }
+        public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "El tipo de activo es obligatorio.")]
         [StringLength(20, ErrorMessage = "El tipo de activo debe tener máximo 20 caracteres.")]

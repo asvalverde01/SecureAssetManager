@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecureAssetManager.Data;
 using SecureAssetManager.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecureAssetManager.Controllers
 {
@@ -21,12 +24,23 @@ namespace SecureAssetManager.Controllers
 
         public IActionResult Create()
         {
+            var threats = _context.Threats.ToList();
+            ViewBag.Threats = new SelectList(threats, "Id", "ThreatDescription");
+
+            var vulnerabilities = _context.Vulnerabilities.ToList();
+            ViewBag.Vulnerabilities = new SelectList(vulnerabilities, "Id", "Id");
+
             return View();
         }
 
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad")] Asset asset)
+        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad,Amenazas,Vulnerabilidades")] Asset asset)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +68,7 @@ namespace SecureAssetManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad")] Asset asset)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad,Amenazas,Vulnerabilidades")] Asset asset)
         {
             if (id != asset.ID)
             {
@@ -65,7 +79,7 @@ namespace SecureAssetManager.Controllers
             {
                 try
                 {
-                    var existingAsset = _context.Assets.Find(asset.ID);
+                    var existingAsset = _context.Assets.Include(a => a.Amenazas).Include(a => a.Vulnerabilidades).FirstOrDefault(a => a.ID == id);
                     if (existingAsset == null)
                     {
                         return NotFound();
@@ -84,6 +98,8 @@ namespace SecureAssetManager.Controllers
                     existingAsset.ValoracionConfidencialidad = asset.ValoracionConfidencialidad;
                     existingAsset.ValoracionIntegridad = asset.ValoracionIntegridad;
                     existingAsset.ValoracionDisponibilidad = asset.ValoracionDisponibilidad;
+                    existingAsset.Amenazas = asset.Amenazas;
+                    existingAsset.Vulnerabilidades = asset.Vulnerabilidades;
 
                     // save changes to database
                     await _context.SaveChangesAsync();
@@ -111,7 +127,7 @@ namespace SecureAssetManager.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Assets.Include(a => a.Amenazas).Include(a => a.Vulnerabilidades).FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null)
             {
                 return NotFound();

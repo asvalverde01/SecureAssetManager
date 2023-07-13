@@ -12,8 +12,8 @@ using SecureAssetManager.Data;
 namespace SecureAssetManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230713060354_DB")]
-    partial class DB
+    [Migration("20230713071715_db")]
+    partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -258,6 +258,7 @@ namespace SecureAssetManager.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
