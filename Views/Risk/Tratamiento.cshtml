@@ -1,0 +1,29 @@
+﻿@model SecureAssetManager.Models.Risk
+
+@{
+    ViewData["Title"] = "Tratamiento de Riesgo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Aquí puedes proporcionar información sobre el tratamiento del riesgo y las acciones recomendadas para mitigarlo.</p>
+
+<div class="form-group">
+    <label for="TipoControl">Selecciona un tipo de control:</label>
+    <select id="TipoControl" class="form-control">
+        <option value="">-- Selecciona un tipo de control --</option>
+        <option value="Control de Acceso">Control de Acceso</option>
+        <option value="Control de Seguridad Física">Control de Seguridad Física</option>
+        <option value="Control de Seguridad de Red">Control de Seguridad de Red</option>
+        <option value="Controles de Seguridad de Aplicaciones">Controles de Seguridad de Aplicaciones</option>
+        <option value="Controles de Seguridad de Datos">Controles de Seguridad de Datos</option>
+    </select>
+</div>
+
+<p>
+    <button type="button" class="btn btn-primary">Aplicar</button>
+</p>
+
+<p>
+    <a asp-action="Index">Volver a la lista de Riesgos</a>
+</p>

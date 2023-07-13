@@ -19,6 +19,7 @@
             <th>Nivel de Riesgo</th>
             <th>Resultado</th>
             <th>Control Existente</th>
+            <th>Riesgo Residual</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -34,12 +35,83 @@
                 <td>@Html.DisplayFor(modelItem => item.Result)</td>
                 <td>@Html.DisplayFor(modelItem => item.ExistingControl)</td>
                 <td>
+                    @{
+                        string riskColor = "";
+                        if (item.RiskLevel >= 1 && item.RiskLevel <= 5)
+                        {
+                            riskColor = "green";
+                        }
+                        else if (item.RiskLevel >= 6 && item.RiskLevel <= 18)
+                        {
+                            riskColor = "red";
+                        }
+                        else if (item.RiskLevel >= 19 && item.RiskLevel <= 25)
+                        {
+                            riskColor = "red";
+                        }
+                        else if (item.RiskLevel >= 26 && item.RiskLevel <= 36)
+                        {
+                            riskColor = "red";
+                        }
+                    }
+
+                    <span style="color: @riskColor">
+                        @{
+                            if (item.RiskLevel >= 1 && item.RiskLevel <= 5)
+                            {
+                                <text>ACEPTAR</text>
+                            }
+                            else if (item.RiskLevel >= 6 && item.RiskLevel <= 18)
+                            {
+                                <text>MITIGAR</text>
+                            }
+                            else if (item.RiskLevel >= 19 && item.RiskLevel <= 25)
+                            {
+                                <text>EVITAR</text>
+                            }
+                            else if (item.RiskLevel >= 26 && item.RiskLevel <= 36)
+                            {
+                                <text>TRANSFERIR</text>
+                            }
+                        }
+                    </span>
+                </td>
+                <td>
+                    @if (item.Result != "ACEPTAR")
+                    {
+                        <a asp-action="Tratamiento" asp-route-code="@item.Code">Tratamiento</a>
+ 
+                    }
                     <a asp-action="Edit" asp-route-code="@item.Code">Editar</a> |
                     <a asp-action="Details" asp-route-code="@item.Code">Detalles</a> |
                     <a asp-action="Delete" asp-route-code="@item.Code">Eliminar</a>
                 </td>
+
             </tr>
         }
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nivel de Riesgo</th>
+            <th>Medidas</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>El riesgo es BAJO</td>
+            <td>Establecer políticas de concientización y capacitación en seguridad para el personal, fomentando buenas prácticas de seguridad en el uso y manejo de los activos.</td>
+        </tr>
+        <tr>
+            <td>El riesgo es MEDIO</td>
+            <td>Realizar auditorías periódicas de seguridad para evaluar y mejorar continuamente la postura de seguridad de los activos.</td>
+        </tr>
+        <tr>
+            <td>El riesgo es ALTO</td>
+            <td>Establecer un control de acceso, que garantice que solo los usuarios autorizados tengan acceso a los activos y a la información sensible.</td>
+        </tr>
     </tbody>
 </table>
 

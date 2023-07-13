@@ -23,9 +23,11 @@ namespace SecureAssetManager.Controllers
             return View(await _context.Risks.ToListAsync());
         }
 
+
         public IActionResult Create()
         {
             ViewBag.AssetCodes = _context.Assets.Select(a => a.CodigoActivo);
+            ViewBag.Assets = _context.Assets.ToList(); //
             return View();
         }
 
@@ -33,66 +35,38 @@ namespace SecureAssetManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Code,ExistingControl")] Risk risk)
         {
-            Console.WriteLine("Primer paso");
-
             var asset = _context.Assets.FirstOrDefault(a => a.CodigoActivo == risk.Code);
-            var threat = _context.Threats.FirstOrDefault(t => t.Id == int.Parse(risk.Code));
-
-            var vulnerability = _context.Vulnerabilities.FirstOrDefault(v => v.Id == int.Parse(risk.Code));
-
-            if (asset != null && threat != null && vulnerability != null)
+            if (asset != null)
             {
-                risk.CID = (asset.ValoracionConfidencialidad + asset.ValoracionIntegridad + asset.ValoracionDisponibilidad) / 3.0;
-                risk.ThreatLevel = threat.Probability;
-                risk.VulnerabilityLevel = vulnerability.Probability;
-                risk.RiskLevel = risk.CID * risk.ThreatLevel * risk.VulnerabilityLevel;
-                risk.Result = risk.RiskLevel > 20 ? "Alto" : risk.RiskLevel > 5 ? "Medio" : "Bajo";
+                var assetVulnerabilities = _context.AssetVulnerabilitys.Where(av => av.AssetId == asset.ID);
+                var assetThreats = _context.AssetThreats.Where(at => at.AssetId == asset.ID);
 
-                // Logging the values
-                Console.WriteLine($"CodigoActivo: {asset.CodigoActivo}");
-                Console.WriteLine($"ValoracionConfidencialidad: {asset.ValoracionConfidencialidad}");
-                Console.WriteLine($"ValoracionIntegridad: {asset.ValoracionIntegridad}");
-                Console.WriteLine($"ValoracionDisponibilidad: {asset.ValoracionDisponibilidad}");
-                Console.WriteLine($"Threat Probability: {threat.Probability}");
-                Console.WriteLine($"Vulnerability Probability: {vulnerability.Probability}");
-                Console.WriteLine($"CID: {risk.CID}");
-                Console.WriteLine($"Risk Level: {risk.RiskLevel}");
-                Console.WriteLine($"Result: {risk.Result}");
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (assetVulnerabilities.Any() && assetThreats.Any())
                 {
-                    Console.WriteLine("Segundo paso");
-                    _context.Add(risk);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine("Error al guardar el objeto de riesgo en la base de datos:");
-                    Console.WriteLine(ex.ToString());
+                    double sumConfidencialidad = assetVulnerabilities.Select(av => av.Vulnerability.Probability).Sum();
+                    double sumIntegridad = assetVulnerabilities.Select(av => av.Vulnerability.Probability).Sum();
+                    double sumDisponibilidad = assetVulnerabilities.Select(av => av.Vulnerability.Probability).Sum();
+                    double averageConfidencialidad = sumConfidencialidad / assetVulnerabilities.Count();
+                    double averageIntegridad = sumIntegridad / assetVulnerabilities.Count();
+                    double averageDisponibilidad = sumDisponibilidad / assetVulnerabilities.Count();
 
+                    double sumThreatProbability = assetThreats.Select(at => at.Threat.Probability).Sum();
+                    double averageThreatProbability = sumThreatProbability / assetThreats.Count();
+
+                    double sumVulnerabilityProbability = assetVulnerabilities.Select(av => av.Vulnerability.Probability).Sum();
+                    double averageVulnerabilityProbability = sumVulnerabilityProbability / assetVulnerabilities.Count();
+
+                    risk.CID = (averageConfidencialidad + averageIntegridad + averageDisponibilidad) / 3.0;
+                    risk.ThreatLevel = (int)averageThreatProbability;
+                    risk.VulnerabilityLevel = (int)averageVulnerabilityProbability;
+                    risk.RiskLevel = risk.CID * risk.ThreatLevel * risk.VulnerabilityLevel;
+                    risk.Result = risk.RiskLevel > 20 ? "Alto" : risk.RiskLevel > 5 ? "Medio" : "Bajo";
                 }
             }
-            else
-            {
-                Console.WriteLine("Model state is not valid. Errors:");
-                foreach (var modelState in ViewData.ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                }
-                _context.Add(risk);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
 
-            ViewBag.AssetCodes = _context.Assets.Select(a => a.CodigoActivo);
-            return View(risk);
+            _context.Add(risk);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -160,6 +134,13 @@ namespace SecureAssetManager.Controllers
             }
             return View(risk);
         }
+
+        public IActionResult Tratamiento(string code)
+        {
+            // Aquí puedes realizar cualquier lógica adicional antes de mostrar la vista "Tratamiento.cshtml"
+            return View();
+        }
+
 
         public async Task<IActionResult> Delete(string code)
         {
