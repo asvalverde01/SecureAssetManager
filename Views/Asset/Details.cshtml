@@ -83,25 +83,33 @@
         @Html.DisplayFor(model => model.ValoracionDisponibilidad)
     </dd>
 
+    
     <dt class="col-sm-3">
         Amenazas
     </dt>
     <dd class="col-sm-9">
-        @foreach (var amenaza in Model.Amenazas)
-        {
-            <p>@amenaza.ThreatDescription</p>
-        }
+        <ul>
+            @foreach (var assetThreat in Model.AssetThreats)
+            {
+                <li>@assetThreat.Threat.ThreatDescription</li>
+            }
+        </ul>
     </dd>
 
     <dt class="col-sm-3">
         Vulnerabilidades
     </dt>
     <dd class="col-sm-9">
-        @foreach (var vulnerabilidad in Model.Vulnerabilidades)
-        {
-            <p>@vulnerabilidad.Id</p>
-        }
+        <ul>
+            @foreach (var assetVulnerability in Model.AssetVulnerabilities)
+            {
+                <li>@assetVulnerability.Vulnerability.Id</li>
+            }
+        </ul>
     </dd>
+
+
+
 </dl>
 
 <div>

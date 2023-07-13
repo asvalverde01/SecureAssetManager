@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SecureAssetManager.Migrations
 {
-    public partial class db : Migration
+    public partial class DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -106,6 +106,40 @@ namespace SecureAssetManager.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Risks", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Threats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ThreatOrigin = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ThreatDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Degradation = table.Column<int>(type: "int", nullable: false),
+                    Probability = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Threats", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vulnerabilities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsHardware = table.Column<bool>(type: "bit", nullable: false),
+                    IsSoftware = table.Column<bool>(type: "bit", nullable: false),
+                    IsNetwork = table.Column<bool>(type: "bit", nullable: false),
+                    IsSite = table.Column<bool>(type: "bit", nullable: false),
+                    VulnerabilityLevel = table.Column<int>(type: "int", nullable: false),
+                    Probability = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vulnerabilities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,49 +249,55 @@ namespace SecureAssetManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Threats",
+                name: "AssetThreats",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ThreatOrigin = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ThreatDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Degradation = table.Column<int>(type: "int", nullable: false),
-                    Probability = table.Column<int>(type: "int", nullable: false),
-                    AssetID = table.Column<int>(type: "int", nullable: true)
+                    AssetId = table.Column<int>(type: "int", nullable: false),
+                    ThreatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Threats", x => x.Id);
+                    table.PrimaryKey("PK_AssetThreats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Threats_Assets_AssetID",
-                        column: x => x.AssetID,
+                        name: "FK_AssetThreats_Assets_AssetId",
+                        column: x => x.AssetId,
                         principalTable: "Assets",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssetThreats_Threats_ThreatId",
+                        column: x => x.ThreatId,
+                        principalTable: "Threats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vulnerabilities",
+                name: "AssetVulnerabilitys",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsHardware = table.Column<bool>(type: "bit", nullable: false),
-                    IsSoftware = table.Column<bool>(type: "bit", nullable: false),
-                    IsNetwork = table.Column<bool>(type: "bit", nullable: false),
-                    IsSite = table.Column<bool>(type: "bit", nullable: false),
-                    VulnerabilityLevel = table.Column<int>(type: "int", nullable: false),
-                    Probability = table.Column<int>(type: "int", nullable: false),
-                    AssetID = table.Column<int>(type: "int", nullable: true)
+                    AssetId = table.Column<int>(type: "int", nullable: false),
+                    VulnerabilityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vulnerabilities", x => x.Id);
+                    table.PrimaryKey("PK_AssetVulnerabilitys", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vulnerabilities_Assets_AssetID",
-                        column: x => x.AssetID,
+                        name: "FK_AssetVulnerabilitys_Assets_AssetId",
+                        column: x => x.AssetId,
                         principalTable: "Assets",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssetVulnerabilitys_Vulnerabilities_VulnerabilityId",
+                        column: x => x.VulnerabilityId,
+                        principalTable: "Vulnerabilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -300,14 +340,24 @@ namespace SecureAssetManager.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Threats_AssetID",
-                table: "Threats",
-                column: "AssetID");
+                name: "IX_AssetThreats_AssetId",
+                table: "AssetThreats",
+                column: "AssetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vulnerabilities_AssetID",
-                table: "Vulnerabilities",
-                column: "AssetID");
+                name: "IX_AssetThreats_ThreatId",
+                table: "AssetThreats",
+                column: "ThreatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetVulnerabilitys_AssetId",
+                table: "AssetVulnerabilitys",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetVulnerabilitys_VulnerabilityId",
+                table: "AssetVulnerabilitys",
+                column: "VulnerabilityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -328,16 +378,16 @@ namespace SecureAssetManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AssetThreats");
+
+            migrationBuilder.DropTable(
+                name: "AssetVulnerabilitys");
+
+            migrationBuilder.DropTable(
                 name: "Controls");
 
             migrationBuilder.DropTable(
                 name: "Risks");
-
-            migrationBuilder.DropTable(
-                name: "Threats");
-
-            migrationBuilder.DropTable(
-                name: "Vulnerabilities");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -346,7 +396,13 @@ namespace SecureAssetManager.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Threats");
+
+            migrationBuilder.DropTable(
                 name: "Assets");
+
+            migrationBuilder.DropTable(
+                name: "Vulnerabilities");
         }
     }
 }

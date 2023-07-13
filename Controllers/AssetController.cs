@@ -29,23 +29,20 @@ namespace SecureAssetManager.Controllers
             return View();
         }
 
-
-
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad,Amenazas,Vulnerabilidades")] Asset asset)
+        public async Task<IActionResult> Create([Bind("CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad")] Asset asset, int[] selectedThreats, int[] selectedVulnerabilities)
         {
-            if (ModelState.IsValid)
-            {
+
+                asset.AssetThreats = selectedThreats.Select(threatId => new AssetThreat { ThreatId = threatId }).ToList();
+                asset.AssetVulnerabilities = selectedVulnerabilities.Select(vulnerabilityId => new AssetVulnerability { VulnerabilityId = vulnerabilityId }).ToList();
+
+
                 _context.Add(asset);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
-            }
-            return View(asset);
         }
+
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -54,17 +51,26 @@ namespace SecureAssetManager.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets.FindAsync(id);
+            var asset = await _context.Assets
+                .Include(a => a.AssetThreats)
+                .Include(a => a.AssetVulnerabilities)
+                .ThenInclude(av => av.Vulnerability)
+                .FirstOrDefaultAsync(a => a.ID == id);
+
             if (asset == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Threats = _context.Threats.ToList();
+            ViewBag.Vulnerabilities = _context.Vulnerabilities.ToList();
+
             return View(asset);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad,Amenazas,Vulnerabilidades")] Asset asset)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,CodigoActivo,Nombre,Responsable,Ubicacion,Descripcion,Tipo,Categoria,Clasificacion,EtiquetaPrincipal,ValoracionConfidencialidad,ValoracionIntegridad,ValoracionDisponibilidad,AssetThreats,AssetVulnerabilities")] Asset asset)
         {
             if (id != asset.ID)
             {
@@ -75,29 +81,7 @@ namespace SecureAssetManager.Controllers
             {
                 try
                 {
-                    var existingAsset = _context.Assets.Include(a => a.Amenazas).Include(a => a.Vulnerabilidades).FirstOrDefault(a => a.ID == id);
-                    if (existingAsset == null)
-                    {
-                        return NotFound();
-                    }
-
-                    // update existing asset with values from request
-                    existingAsset.CodigoActivo = asset.CodigoActivo;
-                    existingAsset.Nombre = asset.Nombre;
-                    existingAsset.Responsable = asset.Responsable;
-                    existingAsset.Ubicacion = asset.Ubicacion;
-                    existingAsset.Descripcion = asset.Descripcion;
-                    existingAsset.Tipo = asset.Tipo;
-                    existingAsset.Categoria = asset.Categoria;
-                    existingAsset.Clasificacion = asset.Clasificacion;
-                    existingAsset.EtiquetaPrincipal = asset.EtiquetaPrincipal;
-                    existingAsset.ValoracionConfidencialidad = asset.ValoracionConfidencialidad;
-                    existingAsset.ValoracionIntegridad = asset.ValoracionIntegridad;
-                    existingAsset.ValoracionDisponibilidad = asset.ValoracionDisponibilidad;
-                    existingAsset.Amenazas = asset.Amenazas;
-                    existingAsset.Vulnerabilidades = asset.Vulnerabilidades;
-
-                    // save changes to database
+                    _context.Update(asset);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -113,6 +97,10 @@ namespace SecureAssetManager.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.Threats = _context.Threats.ToList();
+            ViewBag.Vulnerabilities = _context.Vulnerabilities.ToList();
+
             return View(asset);
         }
 
@@ -123,7 +111,13 @@ namespace SecureAssetManager.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets.Include(a => a.Amenazas).Include(a => a.Vulnerabilidades).FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Assets
+                .Include(a => a.AssetThreats)
+                .ThenInclude(at => at.Threat)
+                .Include(a => a.AssetVulnerabilities)
+                .ThenInclude(av => av.Vulnerability)
+                .FirstOrDefaultAsync(a => a.ID == id);
+
             if (asset == null)
             {
                 return NotFound();
@@ -132,6 +126,7 @@ namespace SecureAssetManager.Controllers
             return View(asset);
         }
 
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,7 +134,7 @@ namespace SecureAssetManager.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Assets.FirstOrDefaultAsync(a => a.ID == id);
             if (asset == null)
             {
                 return NotFound();

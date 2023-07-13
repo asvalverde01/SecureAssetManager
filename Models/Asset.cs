@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecureAssetManager.Models
 {
@@ -66,8 +67,10 @@ namespace SecureAssetManager.Models
         [Display(Name = "Valoración de Disponibilidad")]
         public int ValoracionDisponibilidad { get; set; }
 
-        public List<Threat> Amenazas { get; set; }
+        [Display(Name = "Amenazas")]
+        public virtual ICollection<AssetThreat> AssetThreats { get; set; }
 
-        public List<Vulnerability> Vulnerabilidades { get; set; }
+        [Display(Name = "Vulnerabilidades")]
+        public virtual ICollection<AssetVulnerability> AssetVulnerabilities { get; set; }
     }
 }
