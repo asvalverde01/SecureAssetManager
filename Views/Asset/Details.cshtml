@@ -65,26 +65,6 @@
     </dd>
 
     <dt class="col-sm-3">
-        Amenazas
-    </dt>
-    <dd class="col-sm-9">
-        @foreach (var threat in Model.Amenazas)
-        {
-            <p>@threat.ThreatOrigin - @threat.ThreatDescription</p>
-        }
-    </dd>
-
-    <dt class="col-sm-3">
-        Vulnerabilidades
-    </dt>
-    <dd class="col-sm-9">
-        @foreach (var vulnerability in Model.Vulnerabilidades)
-        {
-            <p>@vulnerability.VulnerabilityLevel - @vulnerability.IsHardware</p>
-        }
-    </dd>
-
-    <dt class="col-sm-3">
         @Html.DisplayNameFor(model => model.ValoracionConfidencialidad)
     </dt>
     <dd class="col-sm-9">
@@ -101,6 +81,26 @@
     </dt>
     <dd class="col-sm-9">
         @Html.DisplayFor(model => model.ValoracionDisponibilidad)
+    </dd>
+
+    <dt class="col-sm-3">
+        Amenazas
+    </dt>
+    <dd class="col-sm-9">
+        @foreach (var amenaza in Model.Amenazas)
+        {
+            <p>@amenaza.ThreatDescription</p>
+        }
+    </dd>
+
+    <dt class="col-sm-3">
+        Vulnerabilidades
+    </dt>
+    <dd class="col-sm-9">
+        @foreach (var vulnerabilidad in Model.Vulnerabilidades)
+        {
+            <p>@vulnerabilidad.Id</p>
+        }
     </dd>
 </dl>
 

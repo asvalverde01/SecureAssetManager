@@ -178,16 +178,33 @@
 
 
             <div class="form-group">
-                <label asp-for="Amenazas" class="control-label"></label>
-                <select asp-for="Amenazas" asp-items="ViewBag.Threats" class="form-control" multiple></select>
+                <label class="control-label">Amenazas</label>
+                <br />
+                @foreach (var threat in ViewBag.Threats)
+                {
+                    <label>
+                        <input type="checkbox" name="Amenazas" value="@threat.Id" />
+                        @threat.ThreatDescription
+                    </label>
+                    <br />
+                }
                 <span asp-validation-for="Amenazas" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Vulnerabilidades" class="control-label"></label>
-                <select asp-for="Vulnerabilidades" asp-items="ViewBag.Vulnerabilities" class="form-control" multiple></select>
+                <label class="control-label">Vulnerabilidades</label>
+                <br />
+                @foreach (var vulnerability in ViewBag.Vulnerabilities)
+                {
+                    <label>
+                        <input type="checkbox" name="Vulnerabilidades" value="@vulnerability.Id" />
+                        @vulnerability.Id
+                    </label>
+                    <br />
+                }
                 <span asp-validation-for="Vulnerabilidades" class="text-danger"></span>
             </div>
+
 
 
 

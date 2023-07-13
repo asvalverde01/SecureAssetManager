@@ -24,12 +24,8 @@ namespace SecureAssetManager.Controllers
 
         public IActionResult Create()
         {
-            var threats = _context.Threats.ToList();
-            ViewBag.Threats = new SelectList(threats, "Id", "ThreatDescription");
-
-            var vulnerabilities = _context.Vulnerabilities.ToList();
-            ViewBag.Vulnerabilities = new SelectList(vulnerabilities, "Id", "Id");
-
+            ViewBag.Threats = _context.Threats.ToList();
+            ViewBag.Vulnerabilities = _context.Vulnerabilities.ToList();
             return View();
         }
 
