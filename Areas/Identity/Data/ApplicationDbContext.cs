@@ -44,6 +44,8 @@ namespace SecureAssetManager.Data
 
         public DbSet<Risk> Risks { get; set; }
 
+        public DbSet<Control> Controls { get; set; }
+
         public async Task<string> SaveImage(IFormFile file)
 		{
 			var fileName = $"{Guid.NewGuid()}_{file.FileName}";

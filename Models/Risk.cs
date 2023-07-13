@@ -2,10 +2,10 @@
 
 namespace SecureAssetManager.Models
 {
-    // Modelo
     public class Risk
     {
         [Key]
+        [Display(Name = "Código")]
         public string Code { get; set; }
 
         [Display(Name = "CID")]

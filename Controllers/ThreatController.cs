@@ -23,9 +23,16 @@ namespace SecureAssetManager.Controllers
         public IActionResult Create()
         {
             var assets = _context.Assets.ToList();
-            ViewBag.AssetCodes = new SelectList(assets, "CodigoActivo", "CodigoActivo");
+            var assetList = assets.Select(a => new SelectListItem
+            {
+                Value = a.CodigoActivo,
+                Text = $"{a.CodigoActivo} - {a.Descripcion}"
+            });
+
+            ViewBag.AssetCodes = new SelectList(assetList, "Value", "Text");
             return View();
         }
+
 
 
         [HttpPost]

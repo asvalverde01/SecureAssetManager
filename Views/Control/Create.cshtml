@@ -1,0 +1,87 @@
+﻿@model SecureAssetManager.Models.Control
+
+@{
+    ViewData["Title"] = "Crear Nuevo Control";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="TipoControl" class="control-label"></label>
+                <select asp-for="TipoControl" class="form-control">
+                    <option value="">-- Selecciona un tipo de control --</option>
+                    <option value="Control de Acceso">Control de Acceso</option>
+                    <option value="Control de Seguridad Física">Control de Seguridad Física</option>
+                    <option value="Control de Seguridad de Red">Control de Seguridad de Red</option>
+                    <option value="Controles de Seguridad de Aplicaciones">Controles de Seguridad de Aplicaciones</option>
+                    <option value="Controles de Seguridad de Datos">Controles de Seguridad de Datos</option>
+                </select>
+                <span asp-validation-for="TipoControl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Efectividad" class="control-label"></label>
+                <select asp-for="Efectividad" class="form-control">
+                    <option value="">-- Selecciona una efectividad --</option>
+                    <option value="1">Bajo</option>
+                    <option value="2">Medio</option>
+                    <option value="3">Alto</option>
+                </select>
+                <span asp-validation-for="Efectividad" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="BrechaSeguridadIdentificada" class="control-label"></label>
+                <select asp-for="BrechaSeguridadIdentificada" class="form-control">
+                    <option value="">-- Selecciona una brecha de seguridad identificada --</option>
+                    <option value="Ninguna">Ninguna</option>
+                    <option value="Una">Una</option>
+                    <option value="Varias">Varias</option>
+                </select>
+                <span asp-validation-for="BrechaSeguridadIdentificada" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Implementacion" class="control-label"></label>
+                <select asp-for="Implementacion" class="form-control">
+                    <option value="">-- Selecciona una opción de implementación --</option>
+                    <option value="Implementado y Monitoreado">Implementado y Monitoreado</option>
+                    <option value="Implementado pero no Monitoreado">Implementado pero no Monitoreado</option>
+                    <option value="No implementado">No implementado</option>
+                </select>
+                <span asp-validation-for="Implementacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Monitoreo" class="control-label"></label>
+                <select asp-for="Monitoreo" class="form-control">
+                    <option value="">-- Selecciona una opción de monitoreo --</option>
+                    <option value="Implementado y Monitoreado">Implementado y Monitoreado</option>
+                    <option value="Implementado pero no Monitoreado">Implementado pero no Monitoreado</option>
+                    <option value="No implementado">No implementado</option>
+                </select>
+                <span asp-validation-for="Monitoreo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

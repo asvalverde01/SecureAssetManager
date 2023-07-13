@@ -42,7 +42,56 @@
         </dd>
     </dl>
 </div>
+
+<div>
+    <h4>Riesgo Residual</h4>
+    <hr />
+    @{
+        int nivelDeRiesgo = Model.Probability;
+        double porcentajeUsuario = 0.0; // Obtener el porcentaje ingresado por el usuario
+
+        double riesgoResidual = nivelDeRiesgo - (porcentajeUsuario * nivelDeRiesgo);
+        string riesgoResidualTexto = GetRiesgoResidualTexto(riesgoResidual);
+
+        <div>
+            <label>Riesgo Residual:</label>
+            <span>@riesgoResidual</span>
+        </div>
+        <div>
+            <label>Riesgo Residual (Texto):</label>
+            <span>@riesgoResidualTexto</span>
+        </div>
+    }
+
+</div>
+
 <div>
     <a asp-action="Edit" asp-route-code="@Model.Code">Editar</a> |
     <a asp-action="Index">Volver a la lista</a>
 </div>
+
+@functions {
+    private string GetRiesgoResidualTexto(double riesgoResidual)
+    {
+        if (riesgoResidual >= 1 && riesgoResidual <= 5)
+        {
+            return "ACEPTAR";
+        }
+        else if (riesgoResidual >= 6 && riesgoResidual <= 18)
+        {
+            return "MITIGAR";
+        }
+        else if (riesgoResidual >= 19 && riesgoResidual <= 25)
+        {
+            return "EVITAR";
+        }
+        else if (riesgoResidual >= 26 && riesgoResidual <= 36)
+        {
+            return "TRANSFERIR";
+        }
+        else
+        {
+            return "Desconocido";
+        }
+    }
+}

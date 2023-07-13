@@ -103,7 +103,7 @@ namespace SecureAssetManager.Controllers
                 return NotFound();
             }
 
-            var risk = await _context.Risks.FirstOrDefaultAsync(m => m.Code == code);
+            var risk = await _context.Risks.SingleOrDefaultAsync(m => m.Code == code);
             if (risk == null)
             {
                 return NotFound();
@@ -111,6 +111,7 @@ namespace SecureAssetManager.Controllers
 
             return View(risk);
         }
+
 
         public async Task<IActionResult> Edit(string code)
         {

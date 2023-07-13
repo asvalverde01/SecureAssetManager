@@ -1,0 +1,42 @@
+﻿@model SecureAssetManager.Models.Risk
+
+@{
+    ViewData["Title"] = "Detalles del Riesgo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Riesgo</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <!-- Otros campos existentes -->
+
+            <dt>Porcentaje Usuario:</dt>
+            <dd><input id="porcentajeUsuarioInput" type="number" min="0" max="100" step="0.01"></dd>
+
+            <dt>Riesgo Residual:</dt>
+            <dd><span id="riesgoResidualLabel"></span></dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <button id="calcularBtn" class="btn btn-primary">Calcular Riesgo Residual</button>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#calcularBtn').click(function () {
+                var nivelDeRiesgo = @Model.RiskLevel;
+                var porcentajeUsuario = parseFloat($('#porcentajeUsuarioInput').val());
+                var riesgoResidual = nivelDeRiesgo - (porcentajeUsuario * nivelDeRiesgo / 100);
+
+                $('#riesgoResidualLabel').text(riesgoResidual.toFixed(2));
+            });
+        });
+    </script>
+}

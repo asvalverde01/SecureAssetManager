@@ -1,0 +1,56 @@
+﻿@model SecureAssetManager.Models.Control
+
+@{
+    ViewData["Title"] = "Eliminar Control";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Detalles del Control</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TipoControl)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TipoControl)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Efectividad)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Efectividad)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.BrechaSeguridadIdentificada)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.BrechaSeguridadIdentificada)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Implementacion)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Implementacion)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Monitoreo)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Monitoreo)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TipoControl" />
+        <div class="form-group">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a asp-action="Index">Volver a la lista</a>
+        </div>
+    </form>
+</div>

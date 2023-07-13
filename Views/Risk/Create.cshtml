@@ -21,14 +21,24 @@
                 <span asp-validation-for="Code" class="text-danger"></span>
             </div>
 
+
             <div class="form-group">
                 <label asp-for="ExistingControl" class="control-label"></label>
-                <input asp-for="ExistingControl" class="form-control" />
+                <select asp-for="ExistingControl" class="form-control">
+                    <option value="">-- Selecciona un tipo de control --</option>
+                    <option value="Control de Acceso">Control de Acceso</option>
+                    <option value="Control de Seguridad Física">Control de Seguridad Física</option>
+                    <option value="Control de Seguridad de Red">Control de Seguridad de Red</option>
+                    <option value="Controles de Seguridad de Aplicaciones">Controles de Seguridad de Aplicaciones</option>
+                    <option value="Controles de Seguridad de Datos">Controles de Seguridad de Datos</option>
+                </select>
                 <span asp-validation-for="ExistingControl" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>

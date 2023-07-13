@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SecureAssetManager.Models.Control>
+
+@{
+    ViewData["Title"] = "Lista de Controles";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create">Crear Nuevo Control</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoControl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Efectividad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BrechaSeguridadIdentificada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Implementacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Monitoreo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoControl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Efectividad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrechaSeguridadIdentificada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Implementacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Monitoreo)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Detalles</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

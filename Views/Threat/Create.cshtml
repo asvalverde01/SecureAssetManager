@@ -20,7 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="ThreatOrigin" class="control-label"></label>
-                <input asp-for="ThreatOrigin" class="form-control" />
+                <select asp-for="ThreatOrigin" class="form-control">
+                    <option value="">-- Selecciona una opción --</option>
+                    <option value="Natural">Natural</option>
+                    <option value="Industrial">Industrial</option>
+                    <option value="Errores y fallos no intencionados">Errores y fallos no intencionados</option>
+                </select>
                 <span asp-validation-for="ThreatOrigin" class="text-danger"></span>
             </div>
             <div class="form-group">

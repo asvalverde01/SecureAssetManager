@@ -2,25 +2,30 @@
 
 namespace SecureAssetManager.Models
 {
-	public class Threat
-	{
-		[Key]
-		public string Code { get; set; }
+    public class Threat
+    {
+        [Key]
+        [Display(Name = "Código")]
+        public string Code { get; set; }
 
-		[Required]
-		[StringLength(100)]
-		public string ThreatOrigin { get; set; }
+        [Required(ErrorMessage = "El origen de la amenaza es obligatorio.")]
+        [StringLength(100)]
+        [Display(Name = "Origen de la Amenaza")]
+        public string ThreatOrigin { get; set; }
 
-		[Required]
-		[StringLength(200)]
-		public string ThreatDescription { get; set; }
+        [Required(ErrorMessage = "La descripción de la amenaza es obligatoria.")]
+        [StringLength(200)]
+        [Display(Name = "Descripción de la Amenaza")]
+        public string ThreatDescription { get; set; }
 
-		[Required]
-		[Range(1, 5)]
-		public int Degradation { get; set; }
+        [Required(ErrorMessage = "La degradación es obligatoria.")]
+        [Range(1, 5, ErrorMessage = "La degradación debe estar entre 1 y 5.")]
+        [Display(Name = "Degradación")]
+        public int Degradation { get; set; }
 
-		[Required]
-		[Range(1, 3)]
-		public int Probability { get; set; }
-	}
+        [Required(ErrorMessage = "La probabilidad es obligatoria.")]
+        [Range(1, 3, ErrorMessage = "La probabilidad debe estar entre 1 y 3.")]
+        [Display(Name = "Probabilidad")]
+        public int Probability { get; set; }
+    }
 }
